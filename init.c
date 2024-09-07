@@ -7,26 +7,28 @@ void	ft_init_arg(char **av, t_init *init)
 	init->time_to_eat = ft_atoi(av[3]);
 	init->time_to_sleep = ft_atoi(av[4]);
 }
-void	ft_is_create(int nb)
+void	*ft_is_create(void *arg)
 {
-	printf("Philosopher %i has been created", nb);
+	int	nb;
+	nb = *(int *)arg;
+	printf("Philosopher %i has been created\n", nb);
+	return (NULL);
 }
 
-void	ft_init_threads(t_init *init)
+void	ft_init_threads(t_init *init, t_philo *philo)
 {
-	pthread_t thread;
 	int	i;
 
 	i = 0;
 	while (i < init->nb_philo)
 	{
-		pthread_create(&thread, NULL, ft_is_create, i);
+		philo[i].philo_id = i + 1;
+		pthread_create(&philo[i].thread, NULL, ft_is_create, &philo[i].philo_id);
 		i++;
 	}
 	while (i < init->nb_philo)
 	{
-		pthread_join(thread, NULL);
+		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
-	printf("progam finish");
 }
