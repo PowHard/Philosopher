@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <stdlib.h>
 
 typedef struct s_init
 {
