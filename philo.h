@@ -12,12 +12,16 @@ typedef struct s_init
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
+	pthread_mutex_t print;
 }	t_init;
 
 typedef struct s_philo
 {
 	pthread_t	thread;
 	int			philo_id;
+	pthread_mutex_t	r_fork;
+	pthread_mutex_t	*l_fork;
+	t_init		init;
 
 }	t_philo;
 // /////////////////  check_error  ///////////////// //
