@@ -21,7 +21,7 @@ typedef struct s_philo
 	int			philo_id;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
-	t_init		init;
+	t_init		*init;
 
 }	t_philo;
 // /////////////////  check_error  ///////////////// //
@@ -34,10 +34,12 @@ int	ft_check_error(int ac, char **av);
 // /////////////////  utils  ///////////////// //
 
 int	ft_atoi(const char *nptr);
+void	ft_print(t_philo philo, char *str);
 
 // /////////////////  init  ///////////////// //
 
 void	ft_init_arg(char **av, t_init *init);
 void	ft_init_threads(t_init *init, t_philo *philo);
+void	*ft_take_fork(void *arg);
 
 #endif

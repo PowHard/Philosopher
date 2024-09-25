@@ -11,27 +11,28 @@ void	*ft_take_fork(void *arg)
 {
 	t_philo	philo;
 	philo = *(t_philo *)arg;
+
 	if (philo.philo_id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo.r_fork);
-		// ft_print
-		pthread_mutex_lock(&philo.l_fork);
-		// ft_print
+		ft_print(philo, "has taken a fork 🍴");
+		pthread_mutex_lock(philo.l_fork);
+		ft_print(philo, "has taken a fork 🍴");
 		//ft_eat
 		pthread_mutex_unlock(&philo.r_fork);
-		pthread_mutex_unlock(&philo.l_fork);
+		pthread_mutex_unlock(philo.l_fork);
 	}
 	else
 	{
-		pthread_mutex_lock(&philo.l_fork);
-		// ft_print
+		pthread_mutex_lock(philo.l_fork);
+		ft_print(philo, "has taken a fork 🍴");
 		pthread_mutex_lock(&philo.r_fork);
-		// ft_print
+		ft_print(philo, "has taken a fork 🍴");
 		//ft_eat
-		pthread_mutex_unlock(&philo.l_fork);
+		pthread_mutex_unlock(philo.l_fork);
 		pthread_mutex_unlock(&philo.r_fork);
 	}
-	rerurn (NULL);
+	return (NULL);
 }
 
 //fourchette de droite est la fourchette alors que celle de gauche est un pointeur sur une fourchette (la fourchette 
@@ -50,7 +51,8 @@ void	ft_init_threads(t_init *init, t_philo *philo)
 
 	i = 0;
 	philo = malloc(sizeof(t_philo) * init->nb_philo);
-	pthread_mutex_init(&philo->init.print, NULL);
+	init = malloc(sizeof(t_init));
+	pthread_mutex_init(&philo->init->print, NULL);
 	while (i < init->nb_philo)
 	{
 		philo[i].philo_id = i + 1;

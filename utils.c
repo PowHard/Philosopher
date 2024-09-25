@@ -26,7 +26,7 @@ int	ft_atoi(const char *nptr)
 }
 void	ft_print(t_philo philo, char *str)
 {
-	pthread_mutex_lock(&philo.init.print);
+	pthread_mutex_lock(&philo.init->print);
 	printf("Philosopher %i %s\n", philo.philo_id, str);
-	pthread_mutex_unlock(&philo.init.print);
+	pthread_mutex_unlock(&philo.init->print);
 }	
