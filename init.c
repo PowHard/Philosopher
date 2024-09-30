@@ -51,11 +51,16 @@ void	ft_init_threads(t_init *init, t_philo *philo)
 
 	i = 0;
 	philo = malloc(sizeof(t_philo) * init->nb_philo);
-	init = malloc(sizeof(t_init));
-	pthread_mutex_init(&philo->init->print, NULL);
+	pthread_mutex_init(&init->print, NULL);
 	while (i < init->nb_philo)
 	{
 		philo[i].philo_id = i + 1;
+		philo[i].init = init;
+		pthread_mutex_init(&philo->r_fork, NULL);
+		if (i == 0)
+			philo[i].l_fork = &philo[init->nb_philo - 1].r_fork;
+		else
+			philo[i].l_fork = &philo[i - 1].r_fork;
 		pthread_create(&philo[i].thread, NULL, ft_take_fork, &philo[i]);
 		i++;
 	}
@@ -65,5 +70,4 @@ void	ft_init_threads(t_init *init, t_philo *philo)
 		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
-	free(philo);
 }
