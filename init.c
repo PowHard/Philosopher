@@ -14,11 +14,15 @@ void	*ft_take_fork(void *arg)
 
 	if (philo.philo_id % 2 == 0)
 	{
+		usleep(100);
 		pthread_mutex_lock(&philo.r_fork);
 		ft_print(philo, "has taken a fork 🍴");
 		pthread_mutex_lock(philo.l_fork);
 		ft_print(philo, "has taken a fork 🍴");
-		//ft_eat
+		//ft_eat ft_sleep 
+		// données dans terminal donné en milisec et Usleep en micro voir pour gettimeofday
+		// gettimeofday pour détecter mort philololo
+		usleep(100);
 		pthread_mutex_unlock(&philo.r_fork);
 		pthread_mutex_unlock(philo.l_fork);
 	}
