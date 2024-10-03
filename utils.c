@@ -1,10 +1,10 @@
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+int long	ft_atol(const char *nptr)
 {
-	int	i;
-	int	sign;
-	int	result;
+	int long	i;
+	int long	sign;
+	int long	result;
 
 	i = 0;
 	sign = 1;
@@ -42,4 +42,15 @@ void	ft_free_all(t_init *init, t_philo *philo)
 	}
 	free(philo);
 	free(init);
+}
+
+long long	ft_get_time()
+{
+	struct timeval tv;
+	long			res;
+
+	if (gettimeofday(&tv, NULL) == -1)
+		return (EXIT_FAILURE);
+	res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (res);
 }

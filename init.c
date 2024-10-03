@@ -2,10 +2,11 @@
 
 void	ft_init_arg(char **av, t_init *init)
 {
-	init->nb_philo = ft_atoi(av[1]);
-	init->time_to_die = ft_atoi(av[2]);
-	init->time_to_eat = ft_atoi(av[3]);
-	init->time_to_sleep = ft_atoi(av[4]);
+	// replace by atol
+	init->nb_philo = ft_atol(av[1]);
+	init->time_to_die = ft_atol(av[2]);
+	init->time_to_eat = ft_atol(av[3]);
+	init->time_to_sleep = ft_atol(av[4]);
 }
 void	*ft_take_fork(void *arg)
 {
@@ -19,7 +20,10 @@ void	*ft_take_fork(void *arg)
 		ft_print(philo, "has taken a fork 🍴");
 		pthread_mutex_lock(philo.l_fork);
 		ft_print(philo, "has taken a fork 🍴");
-		//ft_eat ft_sleep 
+		// check if die with last_eat
+		//ft_eat, print he is eating.. put take a fork in ft_eat.
+		
+		// ft_sleep 
 		// données dans terminal donné en milisec et Usleep en micro voir pour gettimeofday
 		// gettimeofday pour détecter mort philololo
 		usleep(100);
@@ -54,6 +58,7 @@ void	ft_init_threads(t_init *init, t_philo *philo)
 	int	i;
 
 	i = 0;
+	init->start = ft_get_time();
 	philo = malloc(sizeof(t_philo) * init->nb_philo);
 	pthread_mutex_init(&init->print, NULL);
 	while (i < init->nb_philo)

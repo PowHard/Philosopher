@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 typedef struct s_init
 {
@@ -12,6 +13,7 @@ typedef struct s_init
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
+	long start;
 	pthread_mutex_t print;
 }	t_init;
 
@@ -19,6 +21,7 @@ typedef struct s_philo
 {
 	pthread_t	thread;
 	int			philo_id;
+	long	time_last_meat;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
 	t_init		*init;
@@ -33,8 +36,10 @@ int	ft_check_error(int ac, char **av);
 
 // /////////////////  utils  ///////////////// //
 
-int	ft_atoi(const char *nptr);
+int long	ft_atol(const char *nptr);
 void	ft_print(t_philo philo, char *str);
+void	ft_free_all(t_init *init, t_philo *philo);
+long long	ft_get_time();
 
 // /////////////////  init  ///////////////// //
 
