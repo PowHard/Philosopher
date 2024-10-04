@@ -10,35 +10,48 @@ void	ft_init_arg(char **av, t_init *init)
 }
 void	*ft_take_fork(void *arg)
 {
+	int i;
 	t_philo	philo;
-	philo = *(t_philo *)arg;
 
+	i = 0;
+	philo = *(t_philo *)arg;
 	if (philo.philo_id % 2 == 0)
-	{
 		usleep(100);
-		pthread_mutex_lock(&philo.r_fork);
-		ft_print(philo, "has taken a fork 🍴");
-		pthread_mutex_lock(philo.l_fork);
-		ft_print(philo, "has taken a fork 🍴");
-		// check if die with last_eat
-		//ft_eat, print he is eating.. put take a fork in ft_eat.
-		
-		// ft_sleep 
-		// données dans terminal donné en milisec et Usleep en micro voir pour gettimeofday
-		// gettimeofday pour détecter mort philololo
-		usleep(100);
-		pthread_mutex_unlock(&philo.r_fork);
-		pthread_mutex_unlock(philo.l_fork);
-	}
-	else
+	while (i < 5)
 	{
-		pthread_mutex_lock(philo.l_fork);
-		ft_print(philo, "has taken a fork 🍴");
-		pthread_mutex_lock(&philo.r_fork);
-		ft_print(philo, "has taken a fork 🍴");
-		//ft_eat
-		pthread_mutex_unlock(philo.l_fork);
-		pthread_mutex_unlock(&philo.r_fork);
+		if (philo.philo_id != philo.init->nb_philo)
+		{
+			pthread_mutex_lock(philo.l_fork);
+			ft_print(philo, "has taken a fork left🍴");
+			pthread_mutex_lock(&philo.r_fork);
+			ft_print(philo, "has taken a fork right🍴");
+			// check if die with last_eat
+			//ft_eat, print he is eating.. put take a fork in ft_eat.
+			// ft_sleep 
+			// données dans terminal donné en milisec et Usleep en micro voir pour gettimeofday
+			// gettimeofday pour détecter mort philololo
+			// usleep(1000);
+			pthread_mutex_unlock(philo.l_fork);
+			printf("unlock left\n");
+			pthread_mutex_unlock(&philo.r_fork);
+			printf("unlock right\n");
+
+		}
+		else
+		{
+			pthread_mutex_lock(philo.l_fork);
+			ft_print(philo, "has taken a fork left🍴");
+			pthread_mutex_lock(&philo.r_fork);
+			ft_print(philo, "has taken a fork right🍴");
+			//ft_eat
+			pthread_mutex_unlock(philo.l_fork);
+			printf("unlock left\n");
+			pthread_mutex_unlock(&philo.r_fork);
+			printf("unlock right\n");
+
+		}
+		usleep(100);
+		i++;
 	}
 	return (NULL);
 }

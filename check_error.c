@@ -27,7 +27,7 @@ int	ft_check_time(char **av)
 	i = 2;
 	while (i < 5)
 	{
-		if (ft_atoi(av[i]) < 60)
+		if (ft_atol(av[i]) < 60)
 			return (0);
 		i++;
 	}
@@ -53,9 +53,9 @@ int	ft_check_error(int ac, char **av)
 		return (ft_display_error("ERROR, put only positive digit"));
 	else if (ft_check_time(av) == 0)
 		return (ft_display_error("ERROR, the time must be higher than 60ms"));
-	else if (ft_nb_philo(ft_atoi(av[1])) == 0)
+	else if (ft_nb_philo(ft_atol(av[1])) == 0)
 		return (ft_display_error("ERROR, number of philosopher must be between 1 and 200 include"));
-	else if (ac == 6 && ft_atoi(av[5]) == 0)
+	else if (ac == 6 && ft_atol(av[5]) == 0)
 	{
 		return (ft_display_error("ERROR, the philosopher must eat minimum one time"));
 	}
