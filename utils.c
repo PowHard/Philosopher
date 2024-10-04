@@ -28,6 +28,7 @@ void	ft_print(t_philo philo, char *str)
 {
 	pthread_mutex_lock(&philo.init->print);
 	printf("Philosopher %i %s\n", philo.philo_id, str);
+	usleep(10);
 	pthread_mutex_unlock(&philo.init->print);
 }
 void	ft_free_all(t_init *init, t_philo *philo)
@@ -37,7 +38,7 @@ void	ft_free_all(t_init *init, t_philo *philo)
 	i = 0;
 	while (i < init->nb_philo)
 	{
-		pthread_mutex_destroy(&philo[i].r_fork);
+		pthread_mutex_destroy(&philo[i].l_fork);
 		i++;
 	}
 	free(philo);

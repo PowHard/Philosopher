@@ -22,8 +22,8 @@ typedef struct s_philo
 	pthread_t	thread;
 	int			philo_id;
 	long	time_last_meat;
-	pthread_mutex_t	r_fork;
-	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	l_fork;
 	t_init		*init;
 
 }	t_philo;
