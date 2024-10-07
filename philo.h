@@ -14,14 +14,17 @@ typedef struct s_init
 	int	time_to_eat;
 	int	time_to_sleep;
 	long start;
-	pthread_mutex_t print;
+	pthread_mutex_t time_m;
+	pthread_mutex_t sleep_m;
+	pthread_mutex_t eat_m;
+	pthread_mutex_t print_m;
 }	t_init;
 
 typedef struct s_philo
 {
 	pthread_t	thread;
 	int			philo_id;
-	long	time_last_meat;
+	long	time_last_eat;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	l_fork;
 	t_init		*init;
@@ -37,14 +40,22 @@ int	ft_check_error(int ac, char **av);
 // /////////////////  utils  ///////////////// //
 
 int long	ft_atol(const char *nptr);
-void	ft_print(t_philo philo, char *str);
+void	ft_print(t_philo *philo, char *str);
 void	ft_free_all(t_init *init, t_philo *philo);
-long long	ft_get_time();
+long	ft_get_time();
 
 // /////////////////  init  ///////////////// //
 
 void	ft_init_arg(char **av, t_init *init);
 void	ft_init_threads(t_init *init, t_philo *philo);
-void	*ft_take_fork(void *arg);
+void	ft_init_mutex(t_init *init/*, t_philo *philo*/);
+void	*ft_coordinate_action(void *arg);
+void	ft_create_thread(t_init *init, t_philo *philo);
+
+// /////////////////  action  ///////////////// //
+
+void	*ft_take_fork(t_philo *philo);
+void	ft_eat(t_init *init, t_philo *philo);
+void	ft_msleep(long val);
 
 #endif

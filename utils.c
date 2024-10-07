@@ -24,12 +24,18 @@ int long	ft_atol(const char *nptr)
 	}
 	return (result * sign);
 }
-void	ft_print(t_philo philo, char *str)
+void	ft_print(t_philo *philo, char *str)
 {
-	pthread_mutex_lock(&philo.init->print);
-	printf("Philosopher %i %s\n", philo.philo_id, str);
-	usleep(10);
-	pthread_mutex_unlock(&philo.init->print);
+	long	time;
+
+	pthread_mutex_lock(&philo->init->time_m);
+	time = ft_get_time() - philo->init->start;
+	// printf("ft_get_time : %ld\n", ft_get_time());
+	pthread_mutex_unlock(&philo->init->time_m);
+	pthread_mutex_lock(&philo->init->print_m);
+	printf("%ld Philosopher %i %s\n", time, philo->philo_id, str);
+	// usleep(10);
+	pthread_mutex_unlock(&philo->init->print_m);
 }
 void	ft_free_all(t_init *init, t_philo *philo)
 {
@@ -45,7 +51,7 @@ void	ft_free_all(t_init *init, t_philo *philo)
 	free(init);
 }
 
-long long	ft_get_time()
+long ft_get_time()
 {
 	struct timeval tv;
 	long			res;
