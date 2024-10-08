@@ -30,7 +30,6 @@ void	ft_print(t_philo *philo, char *str)
 
 	pthread_mutex_lock(&philo->init->time_m);
 	time = ft_get_time() - philo->init->start;
-	// printf("ft_get_time : %ld\n", ft_get_time());
 	pthread_mutex_unlock(&philo->init->time_m);
 	pthread_mutex_lock(&philo->init->print_m);
 	printf("%ld Philosopher %i %s\n", time, philo->philo_id, str);

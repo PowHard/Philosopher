@@ -26,10 +26,21 @@ void	*ft_coordinate_action(void *arg)
 	while (1)
 	{
 		ft_take_fork(philo);
-		// i++;
+		ft_eat(philo->init, philo);
+		pthread_mutex_unlock(&philo->l_fork);
+		// printf("philo %i unlock left\n", philo->philo_id);
+		pthread_mutex_unlock(philo->r_fork);
+		// pthread_mutex_lock(&philo->init->sleep_m); a mettre dans struct de philo si datata race
+		ft_print(philo, "is sleeping 🛏️");
+		ft_msleep(philo->init->time_to_sleep);
+		// pthread_mutex_unlock(&philo->init->sleep_m);
+		ft_print(philo, "is thinking 💡");
+		// printf("philo %i unlock right\n", philo->philo_id);
 	}
 	return (NULL);
 }
+// NEED TO COPY TIME_TO_EAT AND TIME_TO_SLEEP FOR EACH PHILO and put mutex to do this.
+
 void	ft_init_threads(t_init *init, t_philo *philo)
 {
 	int	i;
@@ -48,8 +59,8 @@ void	ft_init_threads(t_init *init, t_philo *philo)
 			philo[i].r_fork = &philo[0].l_fork;
 		else
 			philo[i].r_fork = &philo[i + 1].l_fork;
-		// printf("Philo %d: l_fork = %p, r_fork = %p\n", 
-		// 	philo[i].philo_id, (void*)&philo[i].l_fork, (void*)philo[i].r_fork);
+		printf("Philo %d: l_fork = %p, r_fork = %p\n", 
+			philo[i].philo_id, (void*)&philo[i].l_fork, (void*)philo[i].r_fork);
 		i++;
 	}
 	ft_create_thread(init, philo);
