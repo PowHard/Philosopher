@@ -1,11 +1,18 @@
 #include "philo.h"
 
-void	ft_init_arg(char **av, t_init *init)
+void	ft_init_arg(char **av, int ac, t_init *init, t_philo *philo)
 {
 	init->nb_philo = ft_atol(av[1]);
 	init->time_to_die = ft_atol(av[2]);
 	init->time_to_eat = ft_atol(av[3]);
 	init->time_to_sleep = ft_atol(av[4]);
+	init->full_meat = 0;
+	init->stop = 0;
+	philo->meal_count = 0;
+	if (ac > 5)
+		init->max_meal = ft_atol(av[5]);
+	else
+		init->max_meal = -1;
 }
 
 void	ft_init_mutex(t_init *init/*, t_philo *philo*/)
@@ -18,24 +25,22 @@ void	ft_init_mutex(t_init *init/*, t_philo *philo*/)
 
 void	*ft_coordinate_action(void *arg)
 {
-	// int i;
 	t_philo	*philo;
 
-	// i = 0;
 	philo = (t_philo *)arg;
 	while (1)
 	{
+		if (philo->init->stop == 1)
+			return (NULL);
+		if (philo->init->max_meal == philo->init->max_meal)
+			ft_take_last_meat(philo);
 		ft_take_fork(philo);
 		ft_eat(philo->init, philo);
 		pthread_mutex_unlock(&philo->l_fork);
-		// printf("philo %i unlock left\n", philo->philo_id);
 		pthread_mutex_unlock(philo->r_fork);
-		// pthread_mutex_lock(&philo->init->sleep_m); a mettre dans struct de philo si datata race
 		ft_print(philo, "is sleeping 🛏️");
 		ft_msleep(philo->init->time_to_sleep);
-		// pthread_mutex_unlock(&philo->init->sleep_m);
 		ft_print(philo, "is thinking 💡");
-		// printf("philo %i unlock right\n", philo->philo_id);
 	}
 	return (NULL);
 }
@@ -59,8 +64,6 @@ void	ft_init_threads(t_init *init, t_philo *philo)
 			philo[i].r_fork = &philo[0].l_fork;
 		else
 			philo[i].r_fork = &philo[i + 1].l_fork;
-		printf("Philo %d: l_fork = %p, r_fork = %p\n", 
-			philo[i].philo_id, (void*)&philo[i].l_fork, (void*)philo[i].r_fork);
 		i++;
 	}
 	ft_create_thread(init, philo);
@@ -78,6 +81,7 @@ void	ft_create_thread(t_init *init, t_philo *philo)
 		i++;
 	}
 	i = 0;
+	pthread_create(&philo->death_t, NULL, ft_check_death, &philo);
 	while (i < init->nb_philo)
 	{
 		pthread_join(philo[i].thread, NULL);

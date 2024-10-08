@@ -44,8 +44,13 @@ void	ft_free_all(t_init *init, t_philo *philo)
 	while (i < init->nb_philo)
 	{
 		pthread_mutex_destroy(&philo[i].l_fork);
+		pthread_mutex_destroy(&philo[i].r_fork);
 		i++;
 	}
+	pthread_mutex_destroy(&init->print_m);
+	pthread_mutex_destroy(&init->time_m);
+	pthread_mutex_destroy(&init->sleep_m);
+	pthread_mutex_destroy(&init->eat_m);
 	free(philo);
 	free(init);
 }

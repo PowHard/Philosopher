@@ -13,6 +13,9 @@ typedef struct s_init
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
+	int	max_meal;
+	int	stop;
+	int	full_meat;
 	long start;
 	pthread_mutex_t time_m;
 	pthread_mutex_t sleep_m;
@@ -23,7 +26,9 @@ typedef struct s_init
 typedef struct s_philo
 {
 	pthread_t	thread;
+	pthread_t	death_t;
 	int			philo_id;
+	int			meal_count;
 	long	time_last_eat;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	l_fork;
@@ -46,7 +51,7 @@ long	ft_get_time();
 
 // /////////////////  init  ///////////////// //
 
-void	ft_init_arg(char **av, t_init *init);
+void	ft_init_arg(char **av, int ac, t_init *init, t_philo *philo);
 void	ft_init_threads(t_init *init, t_philo *philo);
 void	ft_init_mutex(t_init *init/*, t_philo *philo*/);
 void	*ft_coordinate_action(void *arg);
@@ -55,7 +60,13 @@ void	ft_create_thread(t_init *init, t_philo *philo);
 // /////////////////  action  ///////////////// //
 
 void	*ft_take_fork(t_philo *philo);
-void	ft_eat(t_init *init, t_philo *philo);
+void		ft_eat(t_init *init, t_philo *philo);
 void	ft_msleep(long val);
+
+// /////////////////  death  ///////////////// //
+
+int	ft_nb_meal_max(t_init *init, t_philo *philo);
+void	*ft_check_death(void *arg);
+
 
 #endif

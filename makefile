@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra -g
 
-SOURCE = main.c check_error.c utils.c init.c action.c
+SOURCE = main.c check_error.c utils.c init.c action.c death.c
 
 OBJS = $(SOURCE:.c=.o)
 
