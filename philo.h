@@ -22,6 +22,7 @@ typedef struct s_init
 	pthread_mutex_t eat_m;
 	pthread_mutex_t print_m;
 	pthread_mutex_t finish_m;
+	pthread_mutex_t death_m;
 }	t_init;
 
 typedef struct s_philo

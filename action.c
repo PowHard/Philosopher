@@ -6,6 +6,7 @@ void	ft_eat(t_init *init, t_philo *philo)
 	pthread_mutex_lock(&init->eat_m);
 	ft_print(philo, "is eating 🥘");
 	philo->meal_count++;
+	philo->time_last_eat = ft_get_time();
 	pthread_mutex_unlock(&init->eat_m);
 	ft_msleep(init->time_to_eat);
 	// pthread_mutex_lock(&init->sleep_m);
@@ -43,8 +44,6 @@ void	*ft_coordinate_action(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	
-	
 	while (1)
 	{
 		pthread_mutex_lock(&philo->init->finish_m);
@@ -63,7 +62,6 @@ void	*ft_coordinate_action(void *arg)
 		ft_msleep(philo->time_sleep);
 		ft_print(philo, "is thinking 💡");
 	}
-
 
 	return (NULL);
 }

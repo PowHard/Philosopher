@@ -21,6 +21,7 @@ void	ft_init_mutex(t_init *init)
 	pthread_mutex_init(&init->sleep_m, NULL);
 	pthread_mutex_init(&init->time_m, NULL);
 	pthread_mutex_init(&init->finish_m, NULL);
+	pthread_mutex_init(&init->death_m, NULL);
 }
 
 
@@ -64,7 +65,6 @@ void	ft_create_thread(t_init *init, t_philo *philo)
 			return (ft_print_error("Problem when creating thread"));
 	if (pthread_join(philo->death_t, NULL) != 0)
 			return (ft_print_error("Problem when joining thread"));
-
 	i = 0;
 	while (i < init->nb_philo)
 	{

@@ -13,11 +13,14 @@ int	ft_check_time_death(t_init *init, t_philo *philo)
 {
 	long time;
 
-	if (philo->time_last_eat == init->start)
-		return (0);
+	pthread_mutex_lock(&init->eat_m);
 	time = ft_get_time() - philo->time_last_eat;
 	if (time > init->time_to_die)
+	{
+		pthread_mutex_unlock(&init->eat_m);
 		return (1);
+	}
+	pthread_mutex_unlock(&init->eat_m);
 	return (0);
 }
 
@@ -33,12 +36,12 @@ void	*ft_check_death(void *arg)
 		i = 0;
 		while (i < philo->init->nb_philo)
 		{
-			// if (ft_nb_meal_max(philo[i].init, &philo[i]) == 1)
-			// 	philo->init->full_meat++;
 			if (ft_check_time_death(philo[i].init, &philo[i]) == 1)
 			{
 				ft_print(philo, "died");
+				pthread_mutex_lock(&philo->init->finish_m);
 				philo->init->stop++;
+				pthread_mutex_unlock(&philo->init->finish_m);
 				return (NULL);
 			}
 			i++;

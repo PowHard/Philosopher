@@ -32,9 +32,12 @@ void	ft_print(t_philo *philo, char *str)
 	time = ft_get_time() - philo->init->start;
 	pthread_mutex_unlock(&philo->init->time_m);
 	pthread_mutex_lock(&philo->init->print_m);
+	pthread_mutex_lock(&philo->init->finish_m);
 	if (!philo->init->stop && philo->meal_count != philo->init->max_meal)
 		printf("%ld Philosopher %i %s\n", time, philo->philo_id, str);
+	pthread_mutex_unlock(&philo->init->finish_m);
 	pthread_mutex_unlock(&philo->init->print_m);
+
 }
 void	ft_free_all(t_init *init, t_philo *philo)
 {
