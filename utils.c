@@ -32,8 +32,8 @@ void	ft_print(t_philo *philo, char *str)
 	time = ft_get_time() - philo->init->start;
 	pthread_mutex_unlock(&philo->init->time_m);
 	pthread_mutex_lock(&philo->init->print_m);
-	printf("%ld Philosopher %i %s\n", time, philo->philo_id, str);
-	// usleep(10);
+	if (!philo->init->stop && philo->meal_count != philo->init->max_meal)
+		printf("%ld Philosopher %i %s\n", time, philo->philo_id, str);
 	pthread_mutex_unlock(&philo->init->print_m);
 }
 void	ft_free_all(t_init *init, t_philo *philo)
@@ -44,15 +44,14 @@ void	ft_free_all(t_init *init, t_philo *philo)
 	while (i < init->nb_philo)
 	{
 		pthread_mutex_destroy(&philo[i].l_fork);
-		pthread_mutex_destroy(&philo[i].r_fork);
 		i++;
 	}
 	pthread_mutex_destroy(&init->print_m);
 	pthread_mutex_destroy(&init->time_m);
 	pthread_mutex_destroy(&init->sleep_m);
 	pthread_mutex_destroy(&init->eat_m);
+	pthread_mutex_destroy(&init->finish_m);
 	free(philo);
-	free(init);
 }
 
 long ft_get_time()
@@ -64,4 +63,9 @@ long ft_get_time()
 		return (EXIT_FAILURE);
 	res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (res);
+}
+void	ft_print_error(char *str)
+{
+	printf("%s\n", str);
+	return ;
 }
