@@ -6,7 +6,6 @@ void	ft_init_arg(char **av, int ac, t_init *init)
 	init->time_to_die = ft_atol(av[2]);
 	init->time_to_eat = ft_atol(av[3]);
 	init->time_to_sleep = ft_atol(av[4]);
-	init->start = ft_get_time();
 	init->stop = 0;
 	if (ac > 5)
 		init->max_meal = ft_atol(av[5]);

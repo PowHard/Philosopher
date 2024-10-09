@@ -15,7 +15,6 @@ typedef struct s_init
 	int	time_to_sleep;
 	int	max_meal;
 	int	stop;
-	// int	full_meat;
 	long start;
 	pthread_mutex_t time_m;
 	pthread_mutex_t sleep_m;

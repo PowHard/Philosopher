@@ -5,6 +5,7 @@ int	main(int ac, char **av)
 	t_philo	*philo;
 	t_init	init;
 
+	init.start = ft_get_time();
 	if (ft_check_error(ac, av) == 0)
 		return (0);
 	ft_init_arg(av, ac, &init);
