@@ -1,17 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   death.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: estepere <estepere@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 12:31:20 by estepere          #+#    #+#             */
+/*   Updated: 2024/10/10 12:39:30 by estepere         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-// int	ft_nb_meal_max(t_init *init, t_philo *philo)
-// {
-// 	if (philo->meal_count == init->max_meal)
-// 	{
-// 		ft_print(philo, "has taken his last meal");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
 int	ft_check_time_death(t_init *init, t_philo *philo)
 {
-	long time;
+	long	time;
 
 	pthread_mutex_lock(&init->eat_m);
 	time = ft_get_time() - philo->time_last_eat;
@@ -26,7 +29,7 @@ int	ft_check_time_death(t_init *init, t_philo *philo)
 
 void	*ft_check_death(void *arg)
 {
-	int	i;
+	int		i;
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;

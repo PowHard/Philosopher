@@ -1,5 +1,16 @@
-#include "philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   action.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: estepere <estepere@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 12:30:16 by estepere          #+#    #+#             */
+/*   Updated: 2024/10/10 12:40:38 by estepere         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "philo.h"
 
 void	ft_eat(t_init *init, t_philo *philo)
 {
@@ -9,8 +20,6 @@ void	ft_eat(t_init *init, t_philo *philo)
 	philo->time_last_eat = ft_get_time();
 	pthread_mutex_unlock(&init->eat_m);
 	ft_msleep(init->time_to_eat);
-	// pthread_mutex_lock(&init->sleep_m);
-	// pthread_mutex_unlock(&init->sleep_m);
 }
 
 void	ft_msleep(long val)
@@ -36,9 +45,9 @@ void	*ft_take_fork(t_philo *philo)
 		pthread_mutex_lock(&philo->l_fork);
 		ft_print(philo, "has taken a fork 🍴");
 	}
-
 	return (NULL);
 }
+
 void	*ft_coordinate_action(void *arg)
 {
 	t_philo	*philo;
@@ -50,7 +59,6 @@ void	*ft_coordinate_action(void *arg)
 		if (philo->init->stop || philo->meal_count == philo->init->max_meal)
 		{
 			pthread_mutex_unlock(&philo->init->finish_m);
-
 			return (NULL);
 		}
 		pthread_mutex_unlock(&philo->init->finish_m);
@@ -62,6 +70,5 @@ void	*ft_coordinate_action(void *arg)
 		ft_msleep(philo->time_sleep);
 		ft_print(philo, "is thinking 💡");
 	}
-
 	return (NULL);
 }

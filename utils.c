@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: estepere <estepere@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 12:32:21 by estepere          #+#    #+#             */
+/*   Updated: 2024/10/10 12:55:57 by estepere         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int long	ft_atol(const char *nptr)
@@ -24,6 +36,7 @@ int long	ft_atol(const char *nptr)
 	}
 	return (result * sign);
 }
+
 void	ft_print(t_philo *philo, char *str)
 {
 	long	time;
@@ -37,11 +50,11 @@ void	ft_print(t_philo *philo, char *str)
 		printf("%ld %i %s\n", time, philo->philo_id, str);
 	pthread_mutex_unlock(&philo->init->finish_m);
 	pthread_mutex_unlock(&philo->init->print_m);
-
 }
+
 void	ft_free_all(t_init *init, t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < init->nb_philo)
@@ -51,15 +64,14 @@ void	ft_free_all(t_init *init, t_philo *philo)
 	}
 	pthread_mutex_destroy(&init->print_m);
 	pthread_mutex_destroy(&init->time_m);
-	pthread_mutex_destroy(&init->sleep_m);
 	pthread_mutex_destroy(&init->eat_m);
 	pthread_mutex_destroy(&init->finish_m);
 	free(philo);
 }
 
-long ft_get_time()
+long	ft_get_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 	long			res;
 
 	if (gettimeofday(&tv, NULL) == -1)
@@ -67,6 +79,7 @@ long ft_get_time()
 	res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (res);
 }
+
 void	ft_print_error(char *str)
 {
 	printf("%s\n", str);

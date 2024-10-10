@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: estepere <estepere@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 12:31:32 by estepere          #+#    #+#             */
+/*   Updated: 2024/10/10 12:42:43 by estepere         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_init_arg(char **av, int ac, t_init *init)
@@ -17,14 +29,9 @@ void	ft_init_mutex(t_init *init)
 {
 	pthread_mutex_init(&init->print_m, NULL);
 	pthread_mutex_init(&init->eat_m, NULL);
-	pthread_mutex_init(&init->sleep_m, NULL);
 	pthread_mutex_init(&init->time_m, NULL);
 	pthread_mutex_init(&init->finish_m, NULL);
-	pthread_mutex_init(&init->death_m, NULL);
 }
-
-
-// NEED TO COPY TIME_TO_EAT AND TIME_TO_SLEEP FOR EACH PHILO and put mutex to do this.
 
 void	ft_init_threads(t_init *init, t_philo *philo)
 {
@@ -51,19 +58,20 @@ void	ft_init_threads(t_init *init, t_philo *philo)
 
 void	ft_create_thread(t_init *init, t_philo *philo)
 {
-	int	i = 0;
+	int	i;
 
 	i = 0;
 	while (i < init->nb_philo)
 	{
-		if (pthread_create(&philo[i].thread, NULL, ft_coordinate_action, &philo[i]) != 0)
+		if (pthread_create(&philo[i].thread, NULL, ft_coordinate_action,
+				&philo[i]) != 0)
 			return (ft_print_error("Problem when creating thread"));
 		i++;
 	}
 	if (pthread_create(&philo->death_t, NULL, ft_check_death, philo) != 0)
-			return (ft_print_error("Problem when creating thread"));
+		return (ft_print_error("Problem when creating thread"));
 	if (pthread_join(philo->death_t, NULL) != 0)
-			return (ft_print_error("Problem when joining thread"));
+		return (ft_print_error("Problem when joining thread"));
 	i = 0;
 	while (i < init->nb_philo)
 	{

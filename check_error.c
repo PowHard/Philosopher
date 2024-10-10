@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_error.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: estepere <estepere@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 12:30:32 by estepere          #+#    #+#             */
+/*   Updated: 2024/10/10 12:38:40 by estepere         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	is_digit(char **av)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 1;
 	while (av[i])
@@ -22,7 +34,7 @@ int	is_digit(char **av)
 
 int	ft_check_time(char **av)
 {
-	int i;
+	int	i;
 
 	i = 2;
 	while (i < 5)
@@ -31,15 +43,15 @@ int	ft_check_time(char **av)
 			return (0);
 		i++;
 	}
-
 	return (1);
 }
-int ft_nb_philo(int nb)
+
+int	ft_nb_philo(int nb)
 {
 	return (nb >= 1 && nb <= 200);
 }
 
-int ft_display_error(char *str)
+int	ft_display_error(char *str)
 {
 	printf("%s\n", str);
 	return (0);
@@ -52,12 +64,15 @@ int	ft_check_error(int ac, char **av)
 	else if (is_digit(av) == 0)
 		return (ft_display_error("ERROR, put only positive digit"));
 	else if (ft_check_time(av) == 0)
-		return (ft_display_error("ERROR, the time must be higher than 60ms"));
+		return (ft_display_error("ERROR, the time "
+				"must be higher than 60ms"));
 	else if (ft_nb_philo(ft_atol(av[1])) == 0)
-		return (ft_display_error("ERROR, number of philosopher must be between 1 and 200 include"));
+		return (ft_display_error("ERROR, number of philosopher "
+				"must be between 1 and 200 include"));
 	else if (ac == 6 && ft_atol(av[5]) == 0)
 	{
-		return (ft_display_error("ERROR, the philosopher must eat minimum one time"));
+		return (ft_display_error("ERROR, the philosopher must eat minimum "
+				"one time"));
 	}
 	return (1);
 }
