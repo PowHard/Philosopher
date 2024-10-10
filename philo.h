@@ -6,7 +6,7 @@
 /*   By: estepere <estepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:32:01 by estepere          #+#    #+#             */
-/*   Updated: 2024/10/10 12:57:56 by estepere         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:00:03 by estepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <sys/time.h>
 
 typedef struct s_init

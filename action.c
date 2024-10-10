@@ -6,7 +6,7 @@
 /*   By: estepere <estepere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:30:16 by estepere          #+#    #+#             */
-/*   Updated: 2024/10/10 12:40:38 by estepere         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:29:48 by estepere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*ft_take_fork(t_philo *philo)
 	}
 	else
 	{
-		usleep(50);
+		usleep(75);
 		pthread_mutex_lock(philo->r_fork);
 		ft_print(philo, "has taken a fork 🍴");
 		pthread_mutex_lock(&philo->l_fork);
